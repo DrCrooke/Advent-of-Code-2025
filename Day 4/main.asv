@@ -1,0 +1,53 @@
+%% part 1
+clc; clear all; close all;
+
+lines = strtrim(string(fileread("input.txt")).splitlines());
+grid = char(lines);  
+
+[y, x] = size(grid);
+
+
+for xPos = 1:x
+    for yPos = 1:y
+        if strcmp(grid(yPos, xPos), "@")
+            evalGrid = zeros(y, x);
+            % special cases
+            if xPos == 1 && yPos == 1 || xPos == 1 && yPos == y || xPos == x && yPos == 1 || xPos == x && yPos == y
+                grid(yPos, xPos) = "x";
+                continue;
+            end
+            if xPos == 1 % if along left edge
+                evalGrid(yPos-1:yPos+1, xPos:xPos+1) = 1;
+                sample = grid(logical(evalGrid));
+                if (sum(strcmp(sample, "@")) - 1) < 4
+                    grid(yPos, xPos) = "x";
+                continue;
+                end
+            end
+            if xPos == x % if along right edge
+                evalGrid(yPos-1:yPos+1, xPos-1:xPos) = 1;
+                sample = grid(logical(evalGrid));
+                if (sum(strcmp(sample, "@")) - 1) < 4
+                    grid(yPos, xPos) = "x";
+                continue;
+                end
+            end
+            if yPos == 1 % if along top row
+                evalGrid(yPos:yPos+1, xPos-1:xPos+1) = 1;
+                sample = grid(logical(evalGrid));
+                if (sum(strcmp(sample, "@")) - 1) < 4
+                    grid(yPos, xPos) = "x";
+                continue;
+                end
+            end
+            if yPos == y % if along bottom row
+                evalGrid(yPos-1:yPos, xPos-1:xPos+1) = 1;
+                sample = grid(logical(evalGrid));
+                if (sum(strcmp(sample, "@")) - 1) < 4
+                    grid(yPos, xPos) = "x";
+                continue;
+                end
+            end
+        end
+    end
+end
