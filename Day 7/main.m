@@ -1,0 +1,6 @@
+clc; clear all; close all;
+
+lines = char(string(fileread("test.txt")).splitlines());
+
+state = zeros(1, 15);
+state(lines(1, :) == 'S') = 1;
