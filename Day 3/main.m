@@ -1,7 +1,7 @@
 %% part 1
 clc; clear all; close all;
 
-lines = strtrim(string(fileread("test.txt")).splitlines());
+lines = strtrim(string(fileread("input.txt")).splitlines());
 
 sum = 0;
 
